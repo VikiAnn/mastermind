@@ -1,0 +1,35 @@
+Game
+  -generates sequence
+  -initializes guess manager
+  -hands sequence to guess manager
+  -start a new game
+  -check if game is over
+  -check if user won
+  -check if user lost
+
+Guess Manager
+  -can take a sequence at initialization
+  -a place to store guesses
+  -add new guesses
+  -max number of guesses allowed
+  -keep track of how many guesses
+  -compare guess to sequence
+
+Sequence
+  -generate a random sequence and hide it from the user
+
+CLI
+  -can take a play command to initialize game
+  -can take a request-instructions command
+  -can take a quit command
+  -can take a guess
+
+Input Parser
+  -validates user input
+  -tell user if guess is too long/short
+
+Printer
+  -display welcome message
+  -display instructions
+  -display feedback on guesses
+  -display time it took to guess and number of guesses

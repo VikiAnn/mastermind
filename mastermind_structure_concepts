@@ -1,0 +1,34 @@
+Game
+  initialize
+    secret  = Sequence.random
+    guesses = []
+  add_guess(guess)
+    sequence = Sequence.new(guess, secret)
+    guesses.unshift(sequence)
+  over?
+  won?
+  lost?
+    !won? && guesses.size == max_guesses_allowed
+  valid_guess?
+  num_guesses
+  correct_colors
+    guesses[0].correct_colors
+  correct_positions
+
+class CLI
+  def play_game
+    game = Game.new
+    until game.over?
+      guess = get_guess(game) # "rryb"
+      game.add_guess guess
+      if game.won?
+        puts ":)"
+      elsif game.lost?
+        puts ":("
+      else
+        puts last_guess_statistics(game)
+      end
+    end
+    puts game_over_message(game)
+  end
+end
