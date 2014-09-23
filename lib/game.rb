@@ -1,4 +1,8 @@
 class Game
+  def play
+
+  end
+
   def over?
   end
 

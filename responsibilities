@@ -1,19 +1,22 @@
 Game
   -generates sequence
   -initializes guess manager
-  -hands sequence to guess manager
+  -hands sequence and guess to guess manager
   -start a new game
   -check if game is over
   -check if user won
   -check if user lost
 
 Guess Manager
-  -can take a sequence at initialization
+  -can take a sequence and guess at initialization
   -a place to store guesses
   -add new guesses
-  -max number of guesses allowed
+  -max number of guesses
   -keep track of how many guesses
-  -compare guess to sequence
+  -compare guess to sequence and returns response
+  -can identify full correct guess
+  -can identify # of pos correct
+  -can identify # of colors correct
 
 Sequence
   -generate a random sequence and hide it from the user

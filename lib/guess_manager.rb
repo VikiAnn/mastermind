@@ -1,16 +1,17 @@
+# require_relative 'message_printer'
+
 class GuessManager
-  attr_reader :guesses, :sequence
-  MAX_GUESSES = 8
+  attr_reader :guesses, :sequence, :max_guesses, :printer
 
   def initialize(sequence)
     @guesses = []
     @sequence = sequence
-    @correct_positions = 0
-    @correct_elements = 0
+    @max_guesses = 10
+    @printer = MessagePrinter.new
   end
 
   def at_max_guesses?
-    count >= MAX_GUESSES
+    count >= max_guesses
   end
 
   def count
@@ -18,37 +19,38 @@ class GuessManager
   end
 
   def guess(guess)
-    if !at_max_guesses?
-      @guesses << guess
-      if correct_guess?
-        "You've guessed the correct sequence!"
-      elsif !correct_guess?
-        [correct_elements, correct_positions]
-      end
-    else
-      "Sorry, you've run out of guesses"
+    @guesses << guess
+    if correct_guess?
+      printer.correct_guess
+      printer.print
+    elsif !correct_guess?
+      printer.incorrect_guess(correct_elements, correct_positions, count)
+      printer.print
+      [correct_elements, correct_positions]
     end
   end
 
   def correct_elements
+    correct_elements = 0
     guess = @guesses.last.chars.sort
     answer = sequence.chars.sort
     answer.each do |color|
       index = guess.index(color)
       if index
         guess.delete_at(index)
-        @correct_elements += 1
+        correct_elements += 1
       end
     end
-    @correct_elements
+    correct_elements
   end
 
   def correct_positions
+    correct_positions = 0
     guess = @guesses[-1]
     guess.chars.zip(sequence.chars).each do |pair|
-      @correct_positions += 1 if pair[0] == pair[1]
+      correct_positions += 1 if pair[0] == pair[1]
     end
-    @correct_positions
+    correct_positions
   end
 
   def correct_guess?
