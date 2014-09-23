@@ -25,7 +25,7 @@ class MessagePrinter
   end
 
   def start_game_message
-    @current_message = puts "Starting a game of Mastermind.\nI've generated a secret code.\nYour guess can include (r)ed, (y)ellow, (g)reen, or (b)lue."
+    @current_message = "Starting a game of Mastermind.\nI've generated a secret code.\nYour guess can include (r)ed, (y)ellow, (g)reen, or (b)lue."
     print_message
   end
 
