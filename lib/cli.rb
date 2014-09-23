@@ -2,28 +2,25 @@ require 'pry'
 class CLI
   attr_reader :command, :guess, :sequence, :guess_manager, :printer
 
-  def initialize
+  def initialize(stdout)
     @command = ""
-    @printer = MessagePrinter.new
+    @printer = MessagePrinter.new(stdout)
+    @stdout = stdout
   end
 
   def start
-    puts "Welcome to MASTERMIND."
+    printer.welcome
     until quit?
-      puts "Would you like to (p)lay, read the (i)nstructions, or (q)uit?"
+      printer.initial_options
       @command = gets.strip
       case
       when instructions?
-        puts "I've made a secret code of (r)ed, (g)reen, (b)lue and (y)ellow dots."
-        puts "You get 8 tries to guess the code."
-        puts "You may enter guesses in the form yyrg."
+        printer.instructions
       when play?
-        puts "Starting a game of Mastermind."
-        puts "I've generated a secret code."
-        puts "Your guess can include (r)ed, (y)ellow, (g)reen, or (b)lue."
+        printer.start_game_message
         @sequence = Sequence.new.secret
         @guess = ""
-        @guess_manager = GuessManager.new(sequence)
+        @guess_manager = GuessManager.new(sequence, @stdout)
         game_loop
       end
     end
@@ -31,14 +28,13 @@ class CLI
 
   def game_loop
     until won? || lost? || quit?
-      puts "Enter your guess:"
+      printer.guess_prompt
       @command = gets.strip
       @guess = command
       guess_manager.guess(guess)
     end
     if lost?
       printer.at_max_guesses
-      printer.print
     end
   end
 

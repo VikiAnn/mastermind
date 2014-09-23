@@ -3,11 +3,11 @@
 class GuessManager
   attr_reader :guesses, :sequence, :max_guesses, :printer
 
-  def initialize(sequence)
+  def initialize(sequence, stdout)
     @guesses = []
     @sequence = sequence
     @max_guesses = 10
-    @printer = MessagePrinter.new
+    @printer = MessagePrinter.new(stdout)
   end
 
   def at_max_guesses?
@@ -22,12 +22,14 @@ class GuessManager
     @guesses << guess
     if correct_guess?
       printer.correct_guess
-      printer.print
     elsif !correct_guess?
       printer.incorrect_guess(correct_elements, correct_positions, count)
-      printer.print
       [correct_elements, correct_positions]
     end
+  end
+
+  def correct_guess?
+    @guesses[-1] == sequence
   end
 
   def correct_elements
@@ -51,9 +53,5 @@ class GuessManager
       correct_positions += 1 if pair[0] == pair[1]
     end
     correct_positions
-  end
-
-  def correct_guess?
-    @guesses[-1] == sequence
   end
 end
