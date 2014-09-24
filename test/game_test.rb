@@ -16,17 +16,16 @@ class TestGame < Minitest::Test
     @game = Game.new(fake_stdout)
   end
 
+  def test_game_loop
+
+  end
+
   def test_game_can_be_initialized
     assert game.is_a?(Game)
   end
 
   def test_game_has_a_sequence
     assert game.respond_to?(:sequence)
-  end
-
-  def test_game_takes_a_guess
-    skip
-    # how the fuck do I test this?
   end
 
   def test_it_can_check_if_it_is_over

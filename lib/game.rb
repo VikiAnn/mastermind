@@ -3,7 +3,8 @@ class Game
               :sequence,
               :guess,
               :guess_manager,
-              :command
+              :command,
+              :game_time
 
   def initialize(stdout)
     @stdout = stdout
@@ -12,7 +13,7 @@ class Game
   end
 
   def play
-    @game_time.start
+    game_time.start
     printer.start_game_message
     @sequence = Sequence.new.secret
     @guess = ""
@@ -21,18 +22,29 @@ class Game
   end
 
   def game_loop
-    until over?
-      printer.guess_prompt
-      @command = gets.strip
-      @guess = command
-      guess_manager.guess(guess)
-    end
-    if lost?
+    take_turn until over?
+  end
+
+  def take_turn
+    printer.guess_prompt
+    @command = gets.strip
+    @guess = command
+    guess_manager.add_guess(guess)
+    if won?
+      game_time.stop
+      printer.won(game_time.total, sequence)
+    elsif lost?
       printer.at_max_guesses
-    elsif won?
-      @game_time.stop
-      printer.won(@game_time.total, sequence)
+    else
+      feedback
     end
+  end
+
+  def feedback
+    printer.feedback(guess,
+                     guess_manager.correct_elements,
+                     guess_manager.correct_positions,
+                     guess_manager.count)
   end
 
   def over?
@@ -44,7 +56,7 @@ class Game
   end
 
   def won?
-    guess_manager.correct_guess?
+    guess == sequence
   end
 
   def lost?

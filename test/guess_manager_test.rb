@@ -14,14 +14,14 @@ class GuessManagerTest < Minitest::Test
   end
 
   def test_can_receive_guesses
-    guess_manager.guess('yyyy')
-    guess_manager.guess('yrbg')
+    guess_manager.add_guess('yyyy')
+    guess_manager.add_guess('yrbg')
     assert_equal ['yyyy', 'yrbg'], guess_manager.guesses
   end
 
   def test_keeps_count_of_guesses
-    guess_manager.guess('yyrg')
-    guess_manager.guess('byrg')
+    guess_manager.add_guess('yyrg')
+    guess_manager.add_guess('byrg')
     assert_equal 2, guess_manager.count
   end
 
@@ -29,27 +29,22 @@ class GuessManagerTest < Minitest::Test
     assert_equal 10, guess_manager.max_guesses
   end
 
-  def test_can_identify_a_correct_guess
-    guess_manager.guess('yrbg')
-    assert guess_manager.correct_guess?
+  def test_can_return_correct_elements_number
+    guess_manager = GuessManager.new('yyrb', fake_stdout)
+    guess_manager.add_guess('rrbg')
+    assert_equal 2, guess_manager.correct_elements
   end
 
-  def test_can_take_guess_and_return_response
+  def test_can_return_correct_positions_number
     guess_manager = GuessManager.new('yyrb', fake_stdout)
-    guess_manager.guess('rrbg')
-    assert_equal"'RRBG' has 2 correct colors with 0 in the correct position. \nYou've made 1 guesses.", guess_manager.printer.current_message
+    guess_manager.add_guess('yrbg')
+    assert_equal 1, guess_manager.correct_positions
   end
 
-  def test_another_guess
+  def test_can_return_both_correct_positions_and_correct_elements
     guess_manager = GuessManager.new('yyrb', fake_stdout)
-    guess_manager.guess('yrbg')
-    assert_equal"'YRBG' has 3 correct colors with 1 in the correct position. \nYou've made 1 guesses.", guess_manager.printer.current_message
-
-  end
-
-  def test_yet_another_guess
-    guess_manager = GuessManager.new('yyrb', fake_stdout)
-    guess_manager.guess('yyyy')
-    assert_equal"'YYYY' has 2 correct colors with 2 in the correct position. \nYou've made 1 guesses.", guess_manager.printer.current_message
+    guess_manager.add_guess('yyyy')
+    assert_equal 2, guess_manager.correct_positions
+    assert_equal 2, guess_manager.correct_elements
   end
 end

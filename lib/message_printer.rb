@@ -44,7 +44,7 @@ class MessagePrinter
     print_message
   end
 
-  def incorrect_guess(guess, correct_elements, correct_positions, count)
+  def feedback(guess, correct_elements, correct_positions, count)
     @current_message = "'#{guess.upcase}' has #{correct_elements} correct colors with #{correct_positions} in the correct position. \nYou've made #{count} guesses."
     print_message
   end

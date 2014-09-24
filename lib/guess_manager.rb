@@ -1,13 +1,12 @@
-# require_relative 'message_printer'
-require 'pry'
 class GuessManager
-  attr_reader :guesses, :sequence, :max_guesses, :printer
+  attr_reader :guesses,
+              :sequence,
+              :max_guesses
 
   def initialize(sequence, stdout)
     @guesses = []
     @sequence = sequence
     @max_guesses = 10
-    @printer = MessagePrinter.new(stdout)
   end
 
   def at_max_guesses?
@@ -18,16 +17,8 @@ class GuessManager
     @guesses.count
   end
 
-  def guess(guess)
+  def add_guess(guess)
     @guesses << guess.downcase
-    if !correct_guess?
-      printer.incorrect_guess(guess, correct_elements, correct_positions, count)
-      [correct_elements, correct_positions]
-    end
-  end
-
-  def correct_guess?
-    @guesses[-1] == sequence
   end
 
   def correct_elements

@@ -1,11 +1,12 @@
 class CLI
-  attr_reader :command, :printer, :stdout
+  attr_reader :command,
+              :printer,
+              :stdout
 
   def initialize(stdout)
     @command = ""
     @printer = MessagePrinter.new(stdout)
     @stdout = stdout
-    # binding.pry
   end
 
   def start
