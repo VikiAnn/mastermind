@@ -1,11 +1,11 @@
-require 'pry'
 class CLI
-  attr_reader :command, :guess, :sequence, :guess_manager, :printer
+  attr_reader :command, :printer, :stdout
 
   def initialize(stdout)
     @command = ""
     @printer = MessagePrinter.new(stdout)
     @stdout = stdout
+    # binding.pry
   end
 
   def start
@@ -17,33 +17,10 @@ class CLI
       when instructions?
         printer.instructions
       when play?
-        printer.start_game_message
-        @sequence = Sequence.new.secret
-        @guess = ""
-        @guess_manager = GuessManager.new(sequence, @stdout)
-        game_loop
+        game = Game.new(stdout)
+        game.play
       end
     end
-  end
-
-  def game_loop
-    until won? || lost? || quit?
-      printer.guess_prompt
-      @command = gets.strip
-      @guess = command
-      guess_manager.guess(guess)
-    end
-    if lost?
-      printer.at_max_guesses
-    end
-  end
-
-  def won?
-    guess == sequence
-  end
-
-  def lost?
-    guess_manager.at_max_guesses?
   end
 
   def quit?

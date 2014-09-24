@@ -43,7 +43,7 @@ class MessagePrinterTest < Minitest::Test
   end
 
   def test_incorrect_guess
-    printer.incorrect_guess(2, 4, 5)
-    assert printer.current_message.include? "You guessed 2 correct"
+    printer.incorrect_guess('rrbg', 2, 4, 5)
+    assert printer.current_message.include? "'RRBG' has 2 correct"
   end
 end

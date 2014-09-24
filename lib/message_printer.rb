@@ -44,8 +44,13 @@ class MessagePrinter
     print_message
   end
 
-  def incorrect_guess(correct_elements, correct_positions, count)
-    @current_message = "You guessed #{correct_elements} correct colors with #{correct_positions} in the correct position. \nYou've made #{count} guesses."
+  def incorrect_guess(guess, correct_elements, correct_positions, count)
+    @current_message = "'#{guess.upcase}' has #{correct_elements} correct colors with #{correct_positions} in the correct position. \nYou've made #{count} guesses."
+    print_message
+  end
+
+  def won(seconds_taken, sequence)
+    @current_message = "Congratulations, you won!\nYou guessed the sequence '#{sequence.upcase}' in #{seconds_taken}."
     print_message
   end
 end

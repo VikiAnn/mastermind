@@ -7,7 +7,7 @@ require_relative '../lib/message_printer'
 
 class CLITest < Minitest::Test
   attr_reader :cli
-  
+
   def setup
     fake_stdout = StringIO.new
     @cli = CLI.new(fake_stdout)
@@ -35,13 +35,5 @@ class CLITest < Minitest::Test
 
   def test_can_play_game
     assert cli.respond_to?(:play?)
-  end
-
-  def test_can_check_if_game_is_won
-    assert cli.respond_to?(:won?)
-  end
-
-  def test_can_check_if_game_is_lost
-    assert cli.respond_to?(:lost?)
   end
 end

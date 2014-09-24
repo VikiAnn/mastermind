@@ -31,25 +31,25 @@ class GuessManagerTest < Minitest::Test
 
   def test_can_identify_a_correct_guess
     guess_manager.guess('yrbg')
-    assert_equal "You've guessed the correct sequence!", guess_manager.printer.current_message
+    assert guess_manager.correct_guess?
   end
 
   def test_can_take_guess_and_return_response
     guess_manager = GuessManager.new('yyrb', fake_stdout)
     guess_manager.guess('rrbg')
-    assert_equal"You guessed 2 correct colors with 0 in the correct position. \nYou've made 1 guesses.", guess_manager.printer.current_message
+    assert_equal"'RRBG' has 2 correct colors with 0 in the correct position. \nYou've made 1 guesses.", guess_manager.printer.current_message
   end
 
   def test_another_guess
     guess_manager = GuessManager.new('yyrb', fake_stdout)
     guess_manager.guess('yrbg')
-    assert_equal"You guessed 3 correct colors with 1 in the correct position. \nYou've made 1 guesses.", guess_manager.printer.current_message
+    assert_equal"'YRBG' has 3 correct colors with 1 in the correct position. \nYou've made 1 guesses.", guess_manager.printer.current_message
 
   end
 
   def test_yet_another_guess
     guess_manager = GuessManager.new('yyrb', fake_stdout)
     guess_manager.guess('yyyy')
-    assert_equal"You guessed 2 correct colors with 2 in the correct position. \nYou've made 1 guesses.", guess_manager.printer.current_message
+    assert_equal"'YYYY' has 2 correct colors with 2 in the correct position. \nYou've made 1 guesses.", guess_manager.printer.current_message
   end
 end
