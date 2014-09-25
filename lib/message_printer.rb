@@ -20,7 +20,7 @@ class MessagePrinter
   end
 
   def instructions
-    @current_message = "I've made a secret code of (r)ed, (g)reen, (b)lue and (y)ellow dots.\nYou get 10 tries to guess the code.\nYou may enter guesses in the form yyrg."
+    @current_message = "I've made a secret code of (r)ed, (g)reen, (b)lue and (y)ellow dots.\nYou get 10 tries to guess the code.\nYou may enter guesses in the form yyrg.\nWould you like to (p)lay or (q)uit?"
     print_message
   end
 
