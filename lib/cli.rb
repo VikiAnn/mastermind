@@ -15,34 +15,24 @@ class CLI
   def start
     printer.welcome
     printer.initial_options
+    process_initial_commands
+  end
+
+  def process_initial_commands
     until quit?
       @command = gets.strip
       case
       when instructions?
         printer.instructions
       when play?
-        play_game
+        @game = Game.new(stdout, printer)
+        game.play
+        if game.quit?
+          @command = "q"
+        end
       end
       printer.goodbye if quit?
     end
-  end
-
-  def play_game
-    @game = Game.new(stdout, printer)
-    printer.start_game_message
-    game.play
-    if game.won?
-      printer.won(game.game_time.total, game.sequence)
-      printer.ask_play_again
-    elsif game.lost?
-      printer.at_max_guesses
-      printer.ask_play_again
-    elsif game.quit?
-      @command = "q"
-    end
-  end
-
-  def game_stuff
   end
 
   def quit?

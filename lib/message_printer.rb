@@ -68,4 +68,9 @@ class MessagePrinter
     @current_message = "Would you like to (p)lay or (q)uit?"
     print_message
   end
+
+  def enter_valid_guess
+    @current_message = "Please enter a valid guess."
+    print_message
+  end
 end

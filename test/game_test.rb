@@ -9,15 +9,20 @@ require_relative '../lib/guess_manager'
 require_relative '../lib/game_time'
 
 class TestGame < Minitest::Test
-  attr_reader :game, :fake_stdout
+  attr_reader :game, :fake_stdout, :printer
 
   def setup
     @fake_stdout = StringIO.new
-    @game = Game.new(fake_stdout)
+    @printer = MessagePrinter.new(fake_stdout)
+    @game = Game.new(fake_stdout, printer)
   end
 
-  def test_game_loop
+  def test_game_can_be_played
+    assert game.respond_to?(:play)
+  end
 
+  def test_game_can_take_turn
+    assert game.respond_to?(:take_turn)
   end
 
   def test_game_can_be_initialized
@@ -26,6 +31,18 @@ class TestGame < Minitest::Test
 
   def test_game_has_a_sequence
     assert game.respond_to?(:sequence)
+  end
+
+  def test_game_has_lost_sequence
+    assert game.respond_to?(:lost_sequence)
+  end
+
+  def test_game_has_win_sequence
+    assert game.respond_to?(:win_sequence)
+  end
+
+  def test_game_can_give_feedback
+    assert game.respond_to?(:feedback)
   end
 
   def test_it_can_check_if_it_is_over

@@ -14,6 +14,7 @@ class Game
 
   def play
     game_time.start
+    printer.start_game_message
     @sequence = Sequence.new.secret
     @guess = ""
     @guess_manager = GuessManager.new(sequence, @stdout)
@@ -28,14 +29,25 @@ class Game
       guess_manager.add_guess(guess)
       if won?
         win_sequence
+      elsif lost?
+        lost_sequence
       else
         feedback
       end
+    else
+      printer.enter_valid_guess unless quit?
     end
+  end
+
+  def lost_sequence
+    printer.at_max_guesses
+    printer.ask_play_again
   end
 
   def win_sequence
     game_time.stop
+    printer.won(game_time.total, sequence)
+    printer.ask_play_again
   end
 
   def feedback
@@ -46,7 +58,7 @@ class Game
   end
 
   def guess?
-    @command.length == 4
+    @command.length == 4 && @command =~ /[bgry]/i
   end
 
   def over?
