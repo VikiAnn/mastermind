@@ -20,7 +20,7 @@ class MessagePrinter
   end
 
   def instructions
-    @current_message = "I've made a secret code of (r)ed, (g)reen, (b)lue and (y)ellow dots.\nYou get 10 tries to guess the code.\nYou may enter guesses in the form yyrg."
+    @current_message = "I've made a secret code of (r)ed, (g)reen, (b)lue and (y)ellow dots.\nYou get 10 tries to guess the code.\nYou may enter guesses in the form yyrg.\nWould you like to (p)lay or (q)uit?"
     print_message
   end
 
@@ -49,8 +49,23 @@ class MessagePrinter
     print_message
   end
 
+  def ask_play_again
+    @current_message = "Would you like to (p)lay again or (q)uit?"
+    print_message
+  end
+
   def won(seconds_taken, sequence)
     @current_message = "Congratulations, you won!\nYou guessed the sequence '#{sequence.upcase}' in #{seconds_taken}."
+    print_message
+  end
+
+  def goodbye
+    @current_message = "Goodbye!"
+    print_message
+  end
+
+  def play_or_quit
+    @current_message = "Would you like to (p)lay or (q)uit?"
     print_message
   end
 end

@@ -6,15 +6,14 @@ class Game
               :command,
               :game_time
 
-  def initialize(stdout)
+  def initialize(stdout, printer)
     @stdout = stdout
-    @printer = MessagePrinter.new(stdout)
+    @printer = printer
     @game_time = GameTime.new
   end
 
   def play
     game_time.start
-    printer.start_game_message
     @sequence = Sequence.new.secret
     @guess = ""
     @guess_manager = GuessManager.new(sequence, @stdout)
@@ -29,8 +28,6 @@ class Game
       guess_manager.add_guess(guess)
       if won?
         win_sequence
-      elsif lost?
-        printer.at_max_guesses
       else
         feedback
       end
@@ -39,7 +36,6 @@ class Game
 
   def win_sequence
     game_time.stop
-    printer.won(game_time.total, sequence)
   end
 
   def feedback
@@ -63,6 +59,10 @@ class Game
 
   def won?
     guess == sequence
+  end
+
+  def play_again?
+    command == "p" || command == "play"
   end
 
   def lost?
