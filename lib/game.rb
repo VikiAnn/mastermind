@@ -38,8 +38,6 @@ class Game
   def win_sequence
     game_time.stop
     printer.won(game_time.total, sequence)
-    printer.ask_play_again
-    @command = gets.strip
   end
 
   def feedback

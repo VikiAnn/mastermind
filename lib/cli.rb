@@ -1,3 +1,5 @@
+require 'pry'
+
 class CLI
   attr_reader :command,
               :printer,
@@ -11,9 +13,9 @@ class CLI
 
   def start
     printer.welcome
+    printer.initial_options
+    @command = gets.strip
     until quit?
-      printer.initial_options
-      @command = gets.strip
       case
       when instructions?
         printer.instructions
@@ -21,6 +23,8 @@ class CLI
         game = Game.new(stdout)
         game.play
       end
+      printer.ask_play_again
+      @command = gets.strip
     end
   end
 
