@@ -23,9 +23,8 @@ class GuessManager
 
   def correct_elements
     correct_elements = 0
-    guess = @guesses.last.chars.sort
-    answer = sequence.chars.sort
-    answer.each do |color|
+    guess = @guesses.last.chars
+    sequence.each_char do |color|
       index = guess.index(color)
       if index
         guess.delete_at(index)
