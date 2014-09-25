@@ -18,26 +18,28 @@ class Game
     @sequence = Sequence.new.secret
     @guess = ""
     @guess_manager = GuessManager.new(sequence, @stdout)
-    game_loop
-  end
-
-  def game_loop
     take_turn until over?
   end
 
   def take_turn
     printer.guess_prompt
     @command = gets.strip
-    @guess = command
-    guess_manager.add_guess(guess)
-    if won?
-      game_time.stop
-      printer.won(game_time.total, sequence)
-    elsif lost?
-      printer.at_max_guesses
-    else
-      feedback
+    if guess?
+      @guess = command
+      guess_manager.add_guess(guess)
+      if won?
+        win_sequence
+      elsif lost?
+        printer.at_max_guesses
+      else
+        feedback
+      end
     end
+  end
+
+  def win_sequence
+    game_time.stop
+    printer.won(game_time.total, sequence)
   end
 
   def feedback
@@ -45,6 +47,10 @@ class Game
                      guess_manager.correct_elements,
                      guess_manager.correct_positions,
                      guess_manager.count)
+  end
+
+  def guess?
+    @command.length == 4
   end
 
   def over?
