@@ -1,6 +1,6 @@
 class GameTime
   attr_reader :start_time, :stop_time
-  
+
   def start
     @start_time = Time.now
   end
@@ -10,7 +10,7 @@ class GameTime
   end
 
   def total
-    seconds_taken = @stop_time - @start_time
+    seconds_taken = stop_time - start_time
     if seconds_taken < 60
       time = "#{seconds_taken.to_i} seconds"
     else

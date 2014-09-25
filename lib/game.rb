@@ -1,10 +1,10 @@
 class Game
   attr_reader :printer,
+              :game_time,
               :sequence,
               :guess,
               :guess_manager,
-              :command,
-              :game_time
+              :command
 
   def initialize(stdout, printer)
     @stdout = stdout

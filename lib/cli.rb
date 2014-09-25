@@ -1,5 +1,3 @@
-require 'pry'
-
 class CLI
   attr_reader :command,
               :printer,
