@@ -58,4 +58,14 @@ class MessagePrinter
     @current_message = "Congratulations, you won!\nYou guessed the sequence '#{sequence.upcase}' in #{seconds_taken}."
     print_message
   end
+
+  def goodbye
+    @current_message = "Goodbye!"
+    print_message
+  end
+
+  def play_or_quit
+    @current_message = "Would you like to (p)lay or (q)uit?"
+    print_message
+  end
 end

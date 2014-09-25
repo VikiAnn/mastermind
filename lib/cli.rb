@@ -3,7 +3,8 @@ require 'pry'
 class CLI
   attr_reader :command,
               :printer,
-              :stdout
+              :stdout,
+              :game
 
   def initialize(stdout)
     @command = ""
@@ -14,18 +15,30 @@ class CLI
   def start
     printer.welcome
     printer.initial_options
-    @command = gets.strip
     until quit?
+      @command = gets.strip
       case
       when instructions?
         printer.instructions
       when play?
-        game = Game.new(stdout)
+        @game = Game.new(stdout)
         game.play
+        if game.won?
+          printer.ask_play_again
+          @command = gets.strip
+        elsif game.lost?
+          printer.at_max_guesses
+          printer.ask_play_again
+          @command = gets.strip
+        elsif game.quit?
+          @command = "q"
+        end
       end
-      printer.ask_play_again
-      @command = gets.strip
+      printer.goodbye if quit?
     end
+  end
+
+  def game_stuff
   end
 
   def quit?

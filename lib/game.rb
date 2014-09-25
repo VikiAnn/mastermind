@@ -24,14 +24,14 @@ class Game
   def take_turn
     printer.guess_prompt
     @command = gets.strip
-    @guess = command
-    guess_manager.add_guess(guess)
-    if won?
-      win_sequence
-    elsif lost?
-      printer.at_max_guesses
-    else
-      feedback
+    if guess?
+      @guess = command
+      guess_manager.add_guess(guess)
+      if won?
+        win_sequence
+      else
+        feedback
+      end
     end
   end
 
@@ -45,6 +45,10 @@ class Game
                      guess_manager.correct_elements,
                      guess_manager.correct_positions,
                      guess_manager.count)
+  end
+
+  def guess?
+    (@command.length == 4)
   end
 
   def over?
