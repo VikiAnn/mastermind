@@ -25,11 +25,9 @@ class CLI
         game.play
         if game.won?
           printer.ask_play_again
-          @command = gets.strip
         elsif game.lost?
           printer.at_max_guesses
           printer.ask_play_again
-          @command = gets.strip
         elsif game.quit?
           @command = "q"
         end
