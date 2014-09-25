@@ -20,6 +20,8 @@ class CLI
     until quit?
       @command = gets.strip
       case
+      when invalid_input?
+        printer.invalid_input
       when instructions?
         printer.instructions
       when play?
@@ -31,6 +33,10 @@ class CLI
       end
       printer.goodbye if quit?
     end
+  end
+
+  def invalid_input?
+    command =~ /[^qip]/i
   end
 
   def quit?

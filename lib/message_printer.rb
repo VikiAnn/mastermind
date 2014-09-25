@@ -20,12 +20,12 @@ class MessagePrinter
   end
 
   def instructions
-    @current_message = "I've made a secret code of (r)ed, (g)reen, (b)lue and (y)ellow dots.\nYou get 10 tries to guess the code.\nYou may enter guesses in the form yyrg.\nWould you like to (p)lay or (q)uit?"
+    @current_message = "I'll create a secret code of (b)lue, (g)reen, (r)ed and (y)ellow dots.\nYou get 10 tries to guess the code.\nYou may enter guesses in the form 'yyrg'.\nWould you like to (p)lay or (q)uit?"
     print_message
   end
 
   def start_game_message
-    @current_message = "Starting a game of Mastermind.\nI've generated a secret code.\nYour guess can include (r)ed, (y)ellow, (g)reen, or (b)lue."
+    @current_message = "Starting a game.\nI've generated a secret code with four elements made up of: (b)lue, (g)reen, (r)ed, or (y)ellow.\nUse (q)uit at any time to exit the game."
     print_message
   end
 
@@ -66,6 +66,11 @@ class MessagePrinter
 
   def play_or_quit
     @current_message = "Would you like to (p)lay or (q)uit?"
+    print_message
+  end
+
+  def invalid_input
+    @current_message = "Invalid input. Please enter (p)lay, (i)nstructions, or (q)uit."
     print_message
   end
 

@@ -25,17 +25,21 @@ class Game
     printer.guess_prompt
     @command = gets.strip
     if guess?
-      @guess = command
-      guess_manager.add_guess(guess)
-      if won?
-        win_sequence
-      elsif lost?
-        lost_sequence
-      else
-        feedback
-      end
+      evaluate_turn
     else
       printer.enter_valid_guess unless quit?
+    end
+  end
+
+  def evaluate_turn
+    @guess = command
+    guess_manager.add_guess(guess)
+    if won?
+      win_sequence
+    elsif lost?
+      lost_sequence
+    else
+      feedback
     end
   end
 
